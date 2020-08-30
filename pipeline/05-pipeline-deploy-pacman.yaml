@@ -1,0 +1,78 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-pacman
+spec:
+  workspaces:
+  - name: shared-workspace
+  resources:
+  - name: source-repo
+    type: git
+  - name: image
+    type: image
+  params:
+  - name: kustomization-path
+    type: string
+    default: kustomization
+  - name: kustomization-git-repo-url
+    type: string
+  - name: kustomization-git-revision
+    type: string
+    default: master
+  - name: dockerfile-path
+    type: string
+    description: The path to your Dockerfile
+    default: "Dockerfile"
+  tasks:
+  - name: build-image
+    taskRef:
+      name: buildah
+      kind: ClusterTask
+    resources:
+      inputs:
+        - name: source
+          resource: source-repo
+      outputs:
+        - name: image
+          resource: image
+    params:
+    - name: TLSVERIFY
+      value: "false"
+    - name: DOCKERFILE
+      value: "$(params.dockerfile-path)"
+  - name: fetch-repository
+    taskRef:
+      name: git-clone
+      kind: ClusterTask
+    workspaces:
+    - name: output
+      workspace: shared-workspace
+    params:
+    - name: url
+      value: "$(params.kustomization-git-repo-url)"
+    - name: subdirectory
+      value: ""
+    - name: deleteExisting
+      value: "true"
+    - name: revision
+      value: "$(params.kustomization-git-revision)"
+    runAfter:
+    - build-image
+  - name: apply-config
+    params:
+    - name: kustomization-path
+      value: "$(inputs.params.kustomization-path)"
+    taskSpec:
+      params:
+      - name: kustomization-path
+        default: "kustomization"
+      steps:
+      - name: apply-kustomization
+        image: quay.io/openshift/origin-cli:latest
+        workingDir: /workspace/source
+        command: ['/bin/bash', '-c']
+        args:
+        - |-
+          oc apply -k $(kustomization-path)
+    runAfter:
+    - fetch-repository

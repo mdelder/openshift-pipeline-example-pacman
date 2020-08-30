@@ -1,0 +1,18 @@
+
+namespace: pacman
+
+commonLabels:
+  app.kubernetes.io/name: pacman
+
+images:
+- name: pacman:latest
+  newName: quay.io/mdelder/pacman
+  newTag: latest
+
+resources:
+- mongo-pvc.yaml
+- mongo-deployment.yaml
+- pacman-deployment.yaml
+- mongo-service.yaml
+- pacman-service.yaml
+- pacman-route.yaml

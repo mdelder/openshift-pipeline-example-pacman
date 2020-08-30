@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: pipelinerun-build-pacman-01
+spec:
+  serviceAccountName: pipeline
+  pipelineRef:
+    name: build-pacman
+  resources:
+  - name: source-repo
+    resourceRef:
+      name: pacman-git
+  - name: image
+    resourceRef:
+      name: pacman-image
+  workspaces:
+  - name: shared-workspace
+    emptyDir: {}
+  params:
+  - name: DOCKERFILE
+    value: "pacman-nodejs-app/docker/Dockerfile"

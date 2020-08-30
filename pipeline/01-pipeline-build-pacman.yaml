@@ -1,0 +1,34 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-pacman
+spec:
+  workspaces:
+  - name: shared-workspace
+  resources:
+  - name: source-repo
+    type: git
+  - name: image
+    type: image
+  params:
+  - name: dockerfile-path
+    type: string
+    description: The path to your Dockerfile
+    default: "Dockerfile"
+  tasks:
+  - name: build-image
+    taskRef:
+      name: buildah
+      kind: ClusterTask
+    resources:
+      inputs:
+        - name: source
+          resource: source-repo
+      outputs:
+        - name: image
+          resource: image
+    params:
+    - name: TLSVERIFY
+      value: "false"
+    - name: DOCKERFILE
+      value: "$(params.dockerfile-path)"
