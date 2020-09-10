@@ -17,6 +17,9 @@ spec:
         ports:
         - name: mongo
           containerPort: 27017
+        args:
+          - --replSet
+          - rs0
         volumeMounts:
           - name: mongo-db
             mountPath: /data/db
