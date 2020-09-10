@@ -1,9 +1,15 @@
-apiVersion: v1
+apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: pacman
 spec:
-  path: "/"
+  path: /
   to:
     kind: Service
     name: pacman
+  #port:
+  #  targetPort: 80
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
