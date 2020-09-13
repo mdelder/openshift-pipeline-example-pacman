@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: build-pacman
+  name: build-and-deploy-pacman
 spec:
   workspaces:
   - name: shared-workspace
@@ -61,11 +61,16 @@ spec:
   - name: apply-config
     params:
     - name: kustomization-path
-      value: "$(inputs.params.kustomization-path)"
+      value: "$(params.kustomization-path)"
+    workspaces:
+    - name: source
+      workspace: shared-workspace
     taskSpec:
       params:
       - name: kustomization-path
         default: "kustomization"
+      workspaces:
+      - name: source
       steps:
       - name: apply-kustomization
         image: quay.io/openshift/origin-cli:latest
@@ -73,6 +78,7 @@ spec:
         command: ['/bin/bash', '-c']
         args:
         - |-
-          oc apply -k $(kustomization-path)
+          echo "Applying kustomization in DIR \"$(params.kustomization-path)\""
+          oc apply -k $(params.kustomization-path)
     runAfter:
     - fetch-repository
