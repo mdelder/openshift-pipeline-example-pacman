@@ -1,0 +1,10 @@
+
+namespace: pacman-mongo
+
+commonLabels:
+  app.kubernetes.io/name: pacman
+
+resources:
+- mongo-pvc.yaml
+- mongo-deployment.yaml
+- mongo-service.yaml
