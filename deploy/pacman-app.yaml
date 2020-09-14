@@ -24,10 +24,10 @@ spec:
   descriptor: {}
   selector:
     matchExpressions:
-    - key: app
+    - key: app.kubernetes.io/name
       operator: In
       values:
-      - pacman-app
+      - pacman
 ---
 apiVersion: apps.open-cluster-management.io/v1
 kind: Subscription
@@ -37,16 +37,13 @@ metadata:
   name: pacman-app
   namespace: pacman-app
   labels:
-    app: pacman-app
+    app.kubernetes.io/name: pacman
 spec:
   channel: pacman-app/pacman-app-latest
   placement:
     placementRef:
       kind: PlacementRule
       name: pacman-dev-clusters
-  packageOverrides:
-  - packageName: kustomization
-    # packageOverrides:
 ---
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
