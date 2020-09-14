@@ -10,9 +10,9 @@ images:
   newTag: latest
 
 resources:
-- mongo-pvc.yaml
-- mongo-deployment.yaml
-- pacman-deployment.yaml
-- mongo-service.yaml
-- pacman-service.yaml
-- pacman-route.yaml
+- base/mongo-pvc.yaml
+- base/mongo-deployment.yaml
+- base/pacman-deployment.yaml
+- base/mongo-service.yaml
+- base/pacman-service.yaml
+- base/pacman-route.yaml
