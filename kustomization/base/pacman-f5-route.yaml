@@ -1,0 +1,13 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: f5-pacman
+  labels:
+    app.kubernetes.io/name: f5-pacman
+spec:
+  # Added for f5 demonstration
+  host: pacman-pacman-app.www-apps-juliet.juliet-alpha.demo.red-chesterfield.com
+  path: "/"
+  to:
+    kind: Service
+    name: pacman
