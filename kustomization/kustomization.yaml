@@ -16,3 +16,4 @@ resources:
 - base/mongo-service.yaml
 - base/pacman-service.yaml
 - base/pacman-route.yaml
+- base/pacman-f5-route.yaml
