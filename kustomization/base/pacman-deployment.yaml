@@ -11,6 +11,7 @@ spec:
       labels:
         name: pacman
     spec:
+      hostNetwork: true
       containers:
       - image: pacman:latest
         name: pacman
