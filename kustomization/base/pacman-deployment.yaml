@@ -12,7 +12,7 @@ spec:
         name: pacman
     spec:
       containers:
-      - image: quay.io/jpacker/nodejs-pacman-app:latest
+      - image: pacman:latest
         name: pacman
         ports:
         - containerPort: 8080
