@@ -1,0 +1,18 @@
+---
+    apiVersion: tower.ansible.com/v1alpha1
+    kind: AnsibleJob
+    metadata:
+      name: service-now-pacman
+    spec:
+      tower_auth_secret: toweraccess
+      job_template_name: Service Now App Update
+      extra_vars:
+        #snow_record variables
+        # 
+        #data variables
+        sn_severity: 2
+        sn_priority: 2
+        appName: Pacman
+        target_clusters:
+        - juliet-alpha
+        - juliet-bravo
