@@ -2,7 +2,7 @@
 apiVersion: tower.ansible.com/v1alpha1
 kind: AnsibleJob
 metadata:
-  generateName: snow-create-change-record
+  generateName: snow-create-change-record-
   labels:
     app.kubernetes.io/name: pacman
 spec:
