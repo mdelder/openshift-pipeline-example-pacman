@@ -17,3 +17,5 @@ resources:
 - base/pacman-service.yaml
 - base/pacman-route.yaml
 - base/pacman-f5-route.yaml
+- prehook/snow-create-change-record.yaml
+- posthook/f5-update-dns-load-balancer.yaml

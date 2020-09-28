@@ -1,0 +1,12 @@
+
+apiVersion: tower.ansible.com/v1alpha1
+kind: JobTemplate
+metadata:
+  name: f5-update-dns-load-balancer
+  namespace: tower-operator
+spec:
+  tower_auth_secret: toweraccess
+  job_template_name: f5-update-dns-load-balancer
+  job_template_project: f5-update-dns-load-balancer
+  job_template_playbook: src/gslb-commit-juliet.yaml
+  job_template_inventory: Demo Inventory
