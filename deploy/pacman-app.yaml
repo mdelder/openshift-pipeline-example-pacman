@@ -58,7 +58,7 @@ spec:
   clusterSelector:
     clusterReplicas: 2
     matchExpressions:
-    - key: zone
+    - key: region
       operator: In
       values:
       - us-east
